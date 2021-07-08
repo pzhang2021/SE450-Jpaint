@@ -8,30 +8,18 @@ import java.awt.*;
 import java.util.Stack;
 
 public class CreateShape implements ICommand {
-    private PaintCanvasBase paintCanvas;
-    private ShapeList shapeList;
-    private Coordinate startPoint;
-    private Coordinate endPoint;
-    private Color primaryColor;
-    private Color secondaryColor;
-    private ShapeType shapeType;
-    private ShapeShadingType shadingType;
 
-    public CreateShape(PaintCanvasBase paintCanvas, ShapeList shapeList, Coordinate startPoint, Coordinate endPoint, Color primaryColor, Color secondaryColor, ShapeType shapeType, ShapeShadingType shadingType) {
-        this.paintCanvas = paintCanvas;
+    private Shape shape;
+    private ShapeList shapeList;
+
+    public CreateShape(Shape shape, ShapeList shapeList) {
+        this.shape = shape;
         this.shapeList = shapeList;
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
-        this.primaryColor = primaryColor;
-        this.secondaryColor = secondaryColor;
-        this.shapeType = shapeType;
-        this.shadingType = shadingType;
     }
 
     @Override
     public void run() {
-        Shape newShape = new Shape(paintCanvas, startPoint, endPoint, primaryColor, secondaryColor, shapeType, shadingType);
-        shapeList.addShape(newShape);
+        shapeList.addShape(shape);
         CommandHistory.add(this);
     }
 

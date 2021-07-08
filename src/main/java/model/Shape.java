@@ -5,7 +5,7 @@ import view.interfaces.PaintCanvasBase;
 import java.awt.*;
 
 public class Shape {
-    PaintCanvasBase paintCanvas;
+    private PaintCanvasBase paintCanvas;
     Coordinate startPoint;
     Coordinate endPoint;
     Color primaryColor;
@@ -27,7 +27,7 @@ public class Shape {
     }
 
     public void draw(Graphics2D g) {
-        // points details
+        // points details, we want start at left corner
         int startPointX = Math.min(startPoint.getX(), endPoint.getX());
         int startPointY = Math.min(startPoint.getY(), endPoint.getY());
         width = Math.abs(startPoint.getX() - endPoint.getX());

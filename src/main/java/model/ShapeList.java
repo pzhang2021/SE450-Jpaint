@@ -6,6 +6,12 @@ import java.awt.*;
 import java.util.Stack;
 
 public class ShapeList {
+
+    /*
+    Shape list is the class mainly for storing undo, redo shape(s) information.
+    This class initiate at the beginning of the program so other classes are able to access it.
+     */
+
     PaintCanvasBase paintCanvas;
     Stack<Shape> shapeList = new Stack<>();
     Stack<Shape> undoRedoShapeList = new Stack<>();

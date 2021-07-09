@@ -31,7 +31,7 @@ public class CreateShape implements ICommand {
             return;
         }
         myUndoRedoShapeList.add(myShapeList.pop());
-        shapeList.redraw();
+        shapeList.draw();
         // System.out.println("create: undo");
     }
 

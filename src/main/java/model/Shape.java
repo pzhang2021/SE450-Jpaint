@@ -5,19 +5,19 @@ import view.interfaces.PaintCanvasBase;
 import java.awt.*;
 
 public class Shape {
-    private PaintCanvasBase paintCanvas;
-    Coordinate startPoint;
-    Coordinate endPoint;
-    Color primaryColor;
-    Color secondaryColor;
-    ShapeType shapeType;
-    ShapeShadingType shadingType;
 
-    int width;
-    int height;
+    private Coordinate startPoint;
+    private Coordinate endPoint;
+    private Color primaryColor;
+    private Color secondaryColor;
+    private ShapeType shapeType;
+    private ShapeShadingType shadingType;
 
-    public Shape(PaintCanvasBase paintCanvas, Coordinate startPoint, Coordinate endPoint, Color primaryColor, Color secondaryColor, ShapeType shapeType, ShapeShadingType shadingType) {
-        this.paintCanvas = paintCanvas;
+    // maybe need it later
+    private int width;
+    private int height;
+
+    public Shape(Coordinate startPoint, Coordinate endPoint, Color primaryColor, Color secondaryColor, ShapeType shapeType, ShapeShadingType shadingType) {
         this.startPoint = startPoint;
         this.endPoint = endPoint;
         this.primaryColor = primaryColor;
@@ -38,5 +38,7 @@ public class Shape {
         if (shapeType == ShapeType.RECTANGLE) {
             g.fillRect(startPointX, startPointY, width, height);
         }
+        // triangle
+        // ellipse
     }
 }

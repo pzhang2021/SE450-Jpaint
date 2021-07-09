@@ -48,7 +48,7 @@ public class MouseController extends MouseAdapter {
         Coordinate endPoint = new Coordinate(e.getX(), e.getY());
         // System.out.println("end point at " + endPoint.getX() + ", " + endPoint.getY());
         if(appState.getActiveMouseMode() == MouseMode.DRAW) {
-            CreateShape createShape = new CreateShape(new Shape(paintCanvas, startPoint, endPoint, primaryColor, secondaryColor, shapeType, shadingType), shapeList);
+            CreateShape createShape = new CreateShape(new Shape(startPoint, endPoint, primaryColor, secondaryColor, shapeType, shadingType), shapeList);
             createShape.run();
         }
     }

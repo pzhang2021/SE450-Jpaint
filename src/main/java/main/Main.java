@@ -20,6 +20,9 @@ import java.util.EnumMap;
 
 public class Main {
     public static void main(String[] args){
+        /*
+        ShapeList and MouseController instances are created in main class
+         */
         PaintCanvasBase paintCanvas = new PaintCanvas();
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);

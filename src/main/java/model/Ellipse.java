@@ -6,6 +6,10 @@ import java.awt.*;
 
 public class Ellipse implements IShape {
 
+    /*
+    It implement IShape so it has functions of drawing shape and erasing shape
+    */
+
     Shape shape;
 
     public Ellipse(Shape shape) {

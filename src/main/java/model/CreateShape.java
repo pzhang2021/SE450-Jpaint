@@ -11,7 +11,8 @@ public class CreateShape implements ICommand {
 
     /*
     This class is to create shape through Shape factory, and it implement ICommand so it is able to undo/redo
-    the shape. Thus it is shape provider of MouseController also client to ShapeFactory.
+    the shape.
+    ShapeFactory instance is created in CreateShape.
      */
     private PaintCanvasBase paintCanvas;
     private Shape shape;

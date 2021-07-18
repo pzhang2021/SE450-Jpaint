@@ -6,6 +6,10 @@ import java.awt.*;
 
 public class Triangle implements IShape {
 
+    /*
+    It implement IShape so it has functions of drawing shape and erasing shape
+    */
+
     Shape shape;
 
     public Triangle(Shape shape) {

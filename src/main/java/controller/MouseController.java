@@ -13,8 +13,7 @@ public class MouseController extends MouseAdapter {
 
     /*
     MouseAdapter (by default) has own way to detect the condition of mouse (function of clicked, pressed, released, etc.)
-    In this case, we are using pressed and released to detect our coordinate, and store all other variables like
-    color, shape type, shape shading type once we start to click mouse.
+    Coordinate, CreateShape and Shape instances are created in MouseController.
     */
 
     private final ApplicationState appState;

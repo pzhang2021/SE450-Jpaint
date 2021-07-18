@@ -6,6 +6,10 @@ import java.awt.*;
 
 public class Rectangle implements IShape {
 
+    /*
+    It implement IShape so it has functions of drawing shape and erasing shape
+     */
+
     Shape shape;
     private int startPointX;
     private int startPointY;

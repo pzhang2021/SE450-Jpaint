@@ -6,6 +6,10 @@ import java.awt.*;
 
 public class Shape {
 
+    /*
+    This is builder pattern for shape builder, and this still a class for storing parameters so other class are
+    able to access it through getter.
+     */
     private Coordinate startPoint;
     private Coordinate endPoint;
     private Color primaryColor;
@@ -13,32 +17,79 @@ public class Shape {
     private ShapeType shapeType;
     private ShapeShadingType shadingType;
 
-    // maybe need it later
-    private int width;
-    private int height;
-
-    public Shape(Coordinate startPoint, Coordinate endPoint, Color primaryColor, Color secondaryColor, ShapeType shapeType, ShapeShadingType shadingType) {
-        this.startPoint = startPoint;
-        this.endPoint = endPoint;
-        this.primaryColor = primaryColor;
-        this.secondaryColor = secondaryColor;
-        this.shapeType = shapeType;
-        this.shadingType = shadingType;
+    private Shape(ShapeBuilder shapeBuilder) {
+        this.startPoint = shapeBuilder.startPoint;
+        this.endPoint = shapeBuilder.endPoint;
+        this.primaryColor = shapeBuilder.primaryColor;
+        this.secondaryColor = shapeBuilder.secondaryColor;
+        this.shapeType = shapeBuilder.shapeType;
+        this.shadingType = shapeBuilder.shadingType;
     }
 
-    public void draw(Graphics2D g) {
-        // points details, we want start at left corner
-        int startPointX = Math.min(startPoint.getX(), endPoint.getX());
-        int startPointY = Math.min(startPoint.getY(), endPoint.getY());
-        width = Math.abs(startPoint.getX() - endPoint.getX());
-        height = Math.abs(startPoint.getY() - endPoint.getY());
+    public static class ShapeBuilder {
+        private Coordinate startPoint;
+        private Coordinate endPoint;
+        private Color primaryColor;
+        private Color secondaryColor;
+        private ShapeType shapeType;
+        private ShapeShadingType shadingType;
 
-        g.setColor(primaryColor);
-        // rectangle
-        if (shapeType == ShapeType.RECTANGLE) {
-            g.fillRect(startPointX, startPointY, width, height);
+        public ShapeBuilder setStartPoint(Coordinate startPoint) {
+            this.startPoint = startPoint;
+            return this;
         }
-        // triangle
-        // ellipse
+
+        public ShapeBuilder setEndPoint(Coordinate endPoint) {
+            this.endPoint = endPoint;
+            return this;
+        }
+
+        public ShapeBuilder setPrimaryColor(Color primaryColor) {
+            this.primaryColor = primaryColor;
+            return this;
+        }
+
+        public ShapeBuilder setSecondaryColor(Color secondaryColor) {
+            this.secondaryColor = secondaryColor;
+            return this;
+        }
+
+        public ShapeBuilder setShapeType(ShapeType shapeType) {
+            this.shapeType = shapeType;
+            return this;
+        }
+
+        public ShapeBuilder setShadingType(ShapeShadingType shadingType) {
+            this.shadingType = shadingType;
+            return this;
+        }
+
+        public Shape build() {
+            return new Shape(this);
+        }
+    }
+
+    public Coordinate getStartPoint() {
+        return startPoint;
+    }
+
+    public Coordinate getEndPoint() {
+        return endPoint;
+    }
+
+    public Color getPrimaryColor() {
+        return primaryColor;
+    }
+
+    public Color getSecondaryColor() {
+        return secondaryColor;
+    }
+
+    public ShapeType getShapeType() {
+        return shapeType;
+    }
+
+    public ShapeShadingType getShadingType() {
+        return shadingType;
     }
 }

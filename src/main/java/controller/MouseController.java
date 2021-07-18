@@ -10,6 +10,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class MouseController extends MouseAdapter {
+
+    /*
+    MouseAdapter (by default) has own way to detect the condition of mouse (function of clicked, pressed, released, etc.)
+    In this case, we are using pressed and released to detect our coordinate, and store all other variables like
+    color, shape type, shape shading type once we start to click mouse.
+    */
+
     private final ApplicationState appState;
     private final PaintCanvasBase paintCanvas;
     private final ShapeList shapeList;
@@ -43,12 +50,20 @@ public class MouseController extends MouseAdapter {
         secondaryColor = getSecondaryColor.getColor();
     }
 
+    // Once user release the mouse, all parameters will pass to shape builder and it will show the result correspond to mouse mode
     @Override
     public void mouseReleased(MouseEvent e) {
         Coordinate endPoint = new Coordinate(e.getX(), e.getY());
+        Shape newShape = new Shape.ShapeBuilder()
+                .setStartPoint(startPoint)
+                .setEndPoint(endPoint)
+                .setPrimaryColor(primaryColor)
+                .setSecondaryColor(secondaryColor)
+                .setShapeType(shapeType)
+                .setShadingType(shadingType).build();
         // System.out.println("end point at " + endPoint.getX() + ", " + endPoint.getY());
         if(appState.getActiveMouseMode() == MouseMode.DRAW) {
-            CreateShape createShape = new CreateShape(new Shape(startPoint, endPoint, primaryColor, secondaryColor, shapeType, shadingType), shapeList);
+            CreateShape createShape = new CreateShape(paintCanvas, newShape, shapeList);
             createShape.run();
         }
     }

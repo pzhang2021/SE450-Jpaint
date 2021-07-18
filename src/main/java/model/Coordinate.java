@@ -2,6 +2,11 @@ package model;
 
 public class Coordinate {
 
+    /*
+    This is class for storing coordinate, other class are able to derive it through getter
+    and use it for creating shape
+     */
+
     private int x;
     private int y;
 
@@ -14,15 +19,7 @@ public class Coordinate {
         return x;
     }
 
-    public void setX(int x) {
-        this.x = x;
-    }
-
     public int getY() {
         return y;
-    }
-
-    public void setY(int y) {
-        this.y = y;
     }
 }

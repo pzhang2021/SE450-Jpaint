@@ -1,5 +1,6 @@
 package model;
 
+import model.interfaces.IShape;
 import view.interfaces.PaintCanvasBase;
 
 import java.awt.*;
@@ -13,34 +14,34 @@ public class ShapeList{
      */
 
     private PaintCanvasBase paintCanvas;
-    private Stack<Shape> shapeList = new Stack<>();
-    private Stack<Shape> undoRedoShapeList = new Stack<>();
+    private Stack<IShape> shapeList = new Stack<>();
+    private Stack<IShape> undoRedoShapeList = new Stack<>();
 
     public ShapeList(PaintCanvasBase paintCanvas) {
         this.paintCanvas = paintCanvas;
     }
 
-    public void addShape(Shape shape) {
-        shapeList.add(shape);
-        shape.draw(paintCanvas.getGraphics2D());
+    public void addShape(IShape iShape) {
+        shapeList.add(iShape);
+        iShape.draw(paintCanvas.getGraphics2D());
     }
 
-    public void draw() {
-        // clear previous drawing with white background, assume the maximum resolution is 4k
-        Graphics2D g = paintCanvas.getGraphics2D();
-        g.setColor(Color.white);
-        g.fillRect(0,0,3840,2160);
+//    public void draw() {
+//        // clear previous drawing with white background, assume the maximum resolution is 4k
+//        Graphics2D g = paintCanvas.getGraphics2D();
+//        g.setColor(Color.white);
+//        g.fillRect(0,0,3840,2160);
+//
+//        for(IShape iShape : shapeList) {
+//            iShape.draw(g);
+//        }
+//    }
 
-        for(Shape shape : shapeList) {
-            shape.draw(g);
-        }
-    }
-
-    public Stack<Shape> getShapeList() {
+    public Stack<IShape> getShapeList() {
         return shapeList;
     }
 
-    public Stack<Shape> getUndoRedoShapeList() {
+    public Stack<IShape> getUndoRedoShapeList() {
         return undoRedoShapeList;
     }
 }

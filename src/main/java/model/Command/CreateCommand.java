@@ -1,25 +1,25 @@
-package model;
+package model.Command;
 
-import model.Command.CommandHistory;
+import model.Shape;
+import model.ShapeFactory;
+import model.ShapeList;
 import model.interfaces.ICommand;
 import model.interfaces.IShape;
-import view.interfaces.PaintCanvasBase;
+import model.interfaces.IStrategy;
 
 import java.util.Stack;
 
-public class CreateShape implements ICommand {
-
-    /*
-    This class is to create shape through Shape factory, and it implement ICommand so it is able to undo/redo
-    the shape.
-    ShapeFactory instance is created in CreateShape.
-     */
-    private PaintCanvasBase paintCanvas;
+/**
+ *     This class is to create shape through Shape factory, and it implement ICommand so it is able to undo/redo
+ *     the shape.
+ *     ShapeFactory instance is created in CreateShape.
+ */
+public class CreateCommand implements IStrategy, ICommand {
     private Shape shape;
     private ShapeList shapeList;
-
-    public CreateShape(PaintCanvasBase paintCanvas, Shape shape, ShapeList shapeList) {
-        this.paintCanvas = paintCanvas;
+    private Stack<IShape> myShapeList;
+    private Stack<IShape> myUndoRedoList;
+    public CreateCommand(Shape shape, ShapeList shapeList) {
         this.shape = shape;
         this.shapeList = shapeList;
     }
@@ -30,6 +30,8 @@ public class CreateShape implements ICommand {
      */
     @Override
     public void run() {
+        myShapeList = shapeList.getShapeList();
+        myUndoRedoList = shapeList.getUndoRedoShapeList();
         ShapeFactory shapeFactory = new ShapeFactory();
         IShape newShape = shapeFactory.getShape(shape);
         shapeList.addShape(newShape);
@@ -42,13 +44,11 @@ public class CreateShape implements ICommand {
      */
     @Override
     public void undo() {
-        Stack<IShape> myShapeList = shapeList.getShapeList();
-        Stack<IShape> myUndoRedoShapeList = shapeList.getUndoRedoShapeList();
         if (myShapeList.isEmpty()) {
             return;
         }
-        myShapeList.lastElement().clear(paintCanvas.getGraphics2D());
-        myUndoRedoShapeList.add(myShapeList.pop());
+        myShapeList.lastElement().clear();
+        myUndoRedoList.add(myShapeList.pop());
         // System.out.println("create: undo");
     }
 
@@ -57,11 +57,10 @@ public class CreateShape implements ICommand {
      */
     @Override
     public void redo() {
-        Stack<IShape> myUndoRedoShapeList = shapeList.getUndoRedoShapeList();
-        if (myUndoRedoShapeList.isEmpty()) {
+        if (myUndoRedoList.isEmpty()) {
             return;
         }
-        shapeList.addShape(myUndoRedoShapeList.pop());
+        shapeList.addShape(myUndoRedoList.pop());
         // System.out.println("create: redo");
     }
 }

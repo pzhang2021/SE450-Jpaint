@@ -18,5 +18,17 @@ Done, user are able to create rectangle shape with different color.
 Done
 ### Have at least one design pattern implemented
 ![alt text](./img/Sprint-1-UML-1.jpg "UML-Abstract Factory") <br>
-I created an interface containing 3 abstract methods (run, undo, redo) so other class (CreateShape in this case)
+I created an interface containing 3 abstract factory pattern (run, undo, redo) so other class (CreateShape in this case)
 are able to implement and overwrite it with own properties.
+
+## Sprint 2
+Except abstract factory pattern in sprint 1, there are totally 4 new patterns implemented
+1. Builder Pattern
+   1. Shape class implement builder pattern so other class are able to create shape through build pattern.
+2. Strategy Pattern
+   1. Strategy pattern use for mouse mode run() method, this includes IStrategy interface and Context for switching mode.
+3. Observer Pattern
+   1. MovementAlert class implement observer pattern, it allows SelectCommand to add observer(s) (selected shape(s)), and MoveCommand to 
+   update the new coordinate to all observer(s). This requires IMovementObserver interface to share similar methods.
+4. MVC Pattern
+   1. We already have View (UI) initiated in main, so I create ShapeList as data model and MouseController as controller to satisfy with MVC pattern

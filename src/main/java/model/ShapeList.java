@@ -1,41 +1,26 @@
 package model;
 
+import model.interfaces.IMovementObserver;
 import model.interfaces.IShape;
-import view.interfaces.PaintCanvasBase;
 
-import java.awt.*;
 import java.util.Stack;
 
+/**
+ *     This is MVC class, it is data model for storing undo, redo shape(s).
+ *     This class initiate at the beginning of the program so other classes are able to access it.
+ */
 public class ShapeList{
-
-    /*
-    Shape list is the class mainly for storing undo, redo shape(s) information.
-    This class initiate at the beginning of the program so other classes are able to access it.
-     */
-
-    private PaintCanvasBase paintCanvas;
     private Stack<IShape> shapeList = new Stack<>();
     private Stack<IShape> undoRedoShapeList = new Stack<>();
-
-    public ShapeList(PaintCanvasBase paintCanvas) {
-        this.paintCanvas = paintCanvas;
-    }
+    private Stack<Stack<IMovementObserver>> selectList = new Stack<>();
+    private Stack<Stack<IMovementObserver>> undoRedoSelectList = new Stack<>();
+    private Stack<TwoPoint> movementList = new Stack<>();
+    private Stack<TwoPoint> undoRedoMovementList = new Stack<>();
 
     public void addShape(IShape iShape) {
         shapeList.add(iShape);
-        iShape.draw(paintCanvas.getGraphics2D());
+        iShape.draw();
     }
-
-//    public void draw() {
-//        // clear previous drawing with white background, assume the maximum resolution is 4k
-//        Graphics2D g = paintCanvas.getGraphics2D();
-//        g.setColor(Color.white);
-//        g.fillRect(0,0,3840,2160);
-//
-//        for(IShape iShape : shapeList) {
-//            iShape.draw(g);
-//        }
-//    }
 
     public Stack<IShape> getShapeList() {
         return shapeList;
@@ -43,5 +28,21 @@ public class ShapeList{
 
     public Stack<IShape> getUndoRedoShapeList() {
         return undoRedoShapeList;
+    }
+
+    public Stack<Stack<IMovementObserver>> getSelectList() {
+        return selectList;
+    }
+
+    public Stack<Stack<IMovementObserver>> getUndoRedoSelectList() {
+        return undoRedoSelectList;
+    }
+
+    public Stack<TwoPoint> getMovementList() {
+        return movementList;
+    }
+
+    public Stack<TwoPoint> getUndoRedoMovementList() {
+        return undoRedoMovementList;
     }
 }

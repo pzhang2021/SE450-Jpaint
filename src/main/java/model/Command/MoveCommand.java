@@ -1,15 +1,10 @@
 package model.Command;
 
-import model.Coordinate;
 import model.MovementAlert;
 import model.ShapeList;
 import model.TwoPoint;
 import model.interfaces.ICommand;
-import model.interfaces.IMovementObserver;
-import model.interfaces.IShape;
 import model.interfaces.IStrategy;
-
-import java.util.Stack;
 
 /**
  * The main purpose of MoveCommand is to update new coordinate to all observers

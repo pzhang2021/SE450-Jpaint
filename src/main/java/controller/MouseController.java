@@ -5,6 +5,7 @@ import model.Command.CreateCommand;
 import model.Command.MoveCommand;
 import model.Command.SelectCommand;
 import model.Shape;
+import model.interfaces.IStrategy;
 import model.persistence.ApplicationState;
 import view.interfaces.PaintCanvasBase;
 
@@ -41,10 +42,9 @@ public class MouseController extends MouseAdapter {
      */
     @Override
     public void mouseReleased(MouseEvent e) {
-        Context strategy = new Context();
         TwoPoint twoPoint = new TwoPoint(startPoint, new Coordinate(e.getX(), e.getY()));
-        // System.out.println("end point at " + endPoint.getX() + ", " + endPoint.getY());
-        Shape newShape = new Shape.ShapeBuilder()
+        // builder pattern initiate
+        Shape newShape = new ShapeBuilder()
                 .setPaintCanvas(paintCanvas)
                 .setTwoPoint(twoPoint)
                 .setPrimaryColor(appState.getActivePrimaryColor().getColor())
@@ -52,15 +52,17 @@ public class MouseController extends MouseAdapter {
                 .setShapeType(appState.getActiveShapeType())
                 .setShadingType(appState.getActiveShapeShadingType())
                 .build();
+        // strategy pattern initiate
+        IStrategy mouseMode;
+        Context strategy = new Context();
         if(appState.getActiveMouseMode() == MouseMode.DRAW) {
-            strategy.setMouseMode(new CreateCommand(newShape, shapeList));
-            strategy.execute();
+            mouseMode = new CreateCommand(newShape, shapeList);
         } else if(appState.getActiveMouseMode() == MouseMode.SELECT) {
-            strategy.setMouseMode(new SelectCommand(twoPoint, shapeList));
-            strategy.execute();
+            mouseMode = new SelectCommand(twoPoint, shapeList);
         } else {
-            strategy.setMouseMode(new MoveCommand(twoPoint, shapeList));
-            strategy.execute();
+            mouseMode = new MoveCommand(twoPoint, shapeList);
         }
+        strategy.setMouseMode(mouseMode);
+        strategy.execute();
     }
 }

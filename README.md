@@ -18,11 +18,11 @@ Done, user are able to create rectangle shape with different color.
 Done
 ### Have at least one design pattern implemented
 ![alt text](./img/Sprint-1-UML-1.jpg "UML-Abstract Factory") <br>
-I created an interface containing 3 abstract factory pattern (run, undo, redo) so other class (CreateShape in this case)
+I created an interface containing 3 factory method pattern (run, undo, redo) so other class (CreateShape in this case)
 are able to implement and overwrite it with own properties.
 
 ## Sprint 2
-Except abstract factory pattern in sprint 1, there are totally 4 new patterns implemented
+Except factory method pattern in sprint 1, there are totally 4 new patterns implemented
 1. Builder Pattern
    1. Shape class implement builder pattern so other class are able to create shape through build pattern.
 2. Strategy Pattern

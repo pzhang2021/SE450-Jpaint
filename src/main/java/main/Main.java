@@ -25,13 +25,13 @@ import java.util.EnumMap;
  */
 public class Main {
     public static void main(String[] args){
-        PaintCanvasBase paintCanvas = new PaintCanvas();
+        ShapeList shapeList = new ShapeList();
+        PaintCanvasBase paintCanvas = new PaintCanvas(shapeList);
         IGuiWindow guiWindow = new GuiWindow(paintCanvas);
         IUiModule uiModule = new Gui(guiWindow);
         ApplicationState appState = new ApplicationState(uiModule);
-        IJPaintController controller = new JPaintController(uiModule, appState);
+        IJPaintController controller = new JPaintController(uiModule, appState, shapeList);
         // initiate mouse Controller and ShapeList
-        ShapeList shapeList = new ShapeList();
         MouseController mouseController = new MouseController(appState, paintCanvas, shapeList);
         paintCanvas.addMouseListener(mouseController);
         controller.setup();

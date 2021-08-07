@@ -39,10 +39,10 @@ public class CollisionDetection {
         int Ah = twoPoint.getHeight();
         Stack<IMovementObserver> lastList = new Stack<>();
         for (IShape shape: shapeList.getShapeList()) {
-            int Bx = shape.getLeftCornerX();
-            int By = shape.getLeftCornerY();
-            int Bw = shape.getWidth();
-            int Bh = shape.getHeight();
+            int Bx = shape.getShape().getTwoPoint().getLeftCornerX();
+            int By = shape.getShape().getTwoPoint().getLeftCornerY();
+            int Bw = shape.getShape().getTwoPoint().getWidth();
+            int Bh = shape.getShape().getTwoPoint().getHeight();
             if (Bx + Bw > Ax && By + Bh > Ay && Ax + Aw > Bx && Ay + Ah > By) {
                 lastList.add((IMovementObserver) shape);
             }

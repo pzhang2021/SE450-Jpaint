@@ -14,6 +14,7 @@ public class SelectCommand implements IStrategy, ICommand {
 
     private TwoPoint twoPoint;
     private ShapeList shapeList;
+    MovementAlert movementAlert;
     private Stack<Stack<IMovementObserver>> mySelectList;
     private Stack<Stack<IMovementObserver>> myUndoRedoList;
 
@@ -26,8 +27,9 @@ public class SelectCommand implements IStrategy, ICommand {
     public void run() {
         mySelectList = shapeList.getSelectList();
         myUndoRedoList = shapeList.getUndoRedoSelectList();
-        MovementAlert movementAlert = new MovementAlert();
+        movementAlert = new MovementAlert();
         movementAlert.addObserver(shapeList, twoPoint);
+        movementAlert.updateCurrentObserver(shapeList);
         CommandHistory.add(this);
         //System.out.println("There are " + mySelectList.lastElement().size() + " shape(s) selected");
     }
@@ -38,6 +40,7 @@ public class SelectCommand implements IStrategy, ICommand {
             return;
         }
         myUndoRedoList.add(mySelectList.pop());
+        movementAlert.updateCurrentObserver(shapeList);
         //System.out.println("There are " + mySelectList.lastElement().size() + " shape(s) selected");
     }
 
@@ -47,6 +50,7 @@ public class SelectCommand implements IStrategy, ICommand {
             return;
         }
         mySelectList.add(myUndoRedoList.pop());
+        movementAlert.updateCurrentObserver(shapeList);
         //System.out.println("There are " + mySelectList.lastElement().size() + " shape(s) selected");
     }
 }

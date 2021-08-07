@@ -12,10 +12,6 @@ public class Ellipse implements IShape, IMovementObserver {
 
     Shape shape;
     private Graphics2D g;
-    private int leftCornerX;
-    private int leftCornerY;
-    private int width;
-    private int height;
     public Ellipse(Shape shape) {
         this.shape = shape;
     }
@@ -23,46 +19,50 @@ public class Ellipse implements IShape, IMovementObserver {
     @Override
     public void draw() {
         g = shape.getPaintCanvas().getGraphics2D();
-        leftCornerX = shape.getTwoPoint().getLeftCornerX();
-        leftCornerY = shape.getTwoPoint().getLeftCornerY();
-        width = shape.getTwoPoint().getWidth();
-        height = shape.getTwoPoint().getHeight();
         g.setColor(shape.getPrimaryColor());
         if(shape.getShadingType() == ShapeShadingType.FILLED_IN){
-            g.fillOval(leftCornerX, leftCornerY, width, height);
+            g.fillOval(shape.getTwoPoint().getLeftCornerX(), shape.getTwoPoint().getLeftCornerY(), shape.getTwoPoint().getWidth(), shape.getTwoPoint().getHeight());
         }
         else if (shape.getShadingType() == ShapeShadingType.OUTLINE){
-            g.drawOval(leftCornerX, leftCornerY, width, height);
+            g.drawOval(shape.getTwoPoint().getLeftCornerX(), shape.getTwoPoint().getLeftCornerY(), shape.getTwoPoint().getWidth(), shape.getTwoPoint().getHeight());
         }
         else{
-            g.fillOval(leftCornerX, leftCornerY,width, height);
+            g.fillOval(shape.getTwoPoint().getLeftCornerX(), shape.getTwoPoint().getLeftCornerY(), shape.getTwoPoint().getWidth(), shape.getTwoPoint().getHeight());
             g.setColor(shape.getSecondaryColor());
-            g.drawOval(leftCornerX, leftCornerY, width, height);
+            g.drawOval(shape.getTwoPoint().getLeftCornerX(), shape.getTwoPoint().getLeftCornerY(), shape.getTwoPoint().getWidth(), shape.getTwoPoint().getHeight());
         }
     }
 
     @Override
     public void clear() {
+        Stroke stroke = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1, new float[]{9}, 0);
+        g.setStroke(stroke);
         g.setColor(Color.WHITE);
-        g.fillOval(leftCornerX, leftCornerY,width, height);
-        g.drawOval(leftCornerX, leftCornerY, width, height);
+        g.fillOval(shape.getTwoPoint().getMinXY().getX() - 5, shape.getTwoPoint().getMinXY().getY() - 5, shape.getTwoPoint().getWidth() + 10, shape.getTwoPoint().getHeight() + 10);
+        g.drawOval(shape.getTwoPoint().getMinXY().getX() - 5, shape.getTwoPoint().getMinXY().getY() - 5, shape.getTwoPoint().getWidth() + 10, shape.getTwoPoint().getHeight() + 10);
     }
 
-    public int getLeftCornerX() {
-        return leftCornerX;
+    @Override
+    public void repaint(Graphics g) {
+        g.setColor(shape.getPrimaryColor());
+        if(shape.getShadingType() == ShapeShadingType.FILLED_IN){
+            g.fillOval(shape.getTwoPoint().getLeftCornerX(), shape.getTwoPoint().getLeftCornerY(), shape.getTwoPoint().getWidth(), shape.getTwoPoint().getHeight());
+        }
+        else if (shape.getShadingType() == ShapeShadingType.OUTLINE){
+            g.drawOval(shape.getTwoPoint().getLeftCornerX(), shape.getTwoPoint().getLeftCornerY(), shape.getTwoPoint().getWidth(), shape.getTwoPoint().getHeight());
+        }
+        else{
+            g.fillOval(shape.getTwoPoint().getLeftCornerX(), shape.getTwoPoint().getLeftCornerY(), shape.getTwoPoint().getWidth(), shape.getTwoPoint().getHeight());
+            g.setColor(shape.getSecondaryColor());
+            g.drawOval(shape.getTwoPoint().getLeftCornerX(), shape.getTwoPoint().getLeftCornerY(), shape.getTwoPoint().getWidth(), shape.getTwoPoint().getHeight());
+        }
     }
 
-    public int getLeftCornerY() {
-        return leftCornerY;
+    @Override
+    public Shape getShape() {
+        return shape;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public int getHeight() {
-        return height;
-    }
 
     @Override
     public void update(TwoPoint twoPoint) {

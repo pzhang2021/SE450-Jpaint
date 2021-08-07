@@ -49,6 +49,7 @@ public class CreateCommand implements IStrategy, ICommand {
         }
         myShapeList.lastElement().clear();
         myUndoRedoList.add(myShapeList.pop());
+        myShapeList.forEach(shape -> shape.draw());
         // System.out.println("create: undo");
     }
 

@@ -1,6 +1,7 @@
 package model;
 
 import model.interfaces.IMovementObserver;
+import model.interfaces.IShape;
 
 import java.util.Stack;
 
@@ -24,6 +25,7 @@ public class MovementAlert {
     }
 
     public void undoMove(ShapeList shapeList) {
+        if (shapeList.getMovementList().isEmpty()) return;
         TwoPoint twoPoint = shapeList.getMovementList().lastElement().switchPoint();
         shapeList.getUndoRedoMovementList().add(shapeList.getMovementList().pop());
         observers = shapeList.getSelectList().lastElement();
@@ -31,15 +33,30 @@ public class MovementAlert {
     }
 
     public void redoMove(ShapeList shapeList) {
-        TwoPoint twoPoint = shapeList.getUndoRedoMovementList().lastElement().switchPoint();
+        if (shapeList.getUndoRedoMovementList().isEmpty()) return;
+        TwoPoint twoPoint = shapeList.getUndoRedoMovementList().lastElement();
         shapeList.getMovementList().add(shapeList.getUndoRedoMovementList().pop());
         observers = shapeList.getSelectList().lastElement();
         notifyAllObservers(twoPoint, shapeList);
     }
 
     private void notifyAllObservers(TwoPoint twoPoint, ShapeList shapeList) {
-        observers.forEach(observer -> observer.clear());
+        shapeList.getShapeList().forEach(observer -> observer.clear());
         observers.forEach(observer -> observer.update(twoPoint));
-        shapeList.getShapeList().forEach(shape -> shape.draw());
+//        shapeList.getShapeList().forEach(shape -> shape.draw());
+        shapeList.getShapeList().forEach(observer -> observer.draw());
+        for (IMovementObserver observer: shapeList.getSelectList().lastElement()) {
+            ShapeDecorator outline = new OutlineDecorator(observer);
+            outline.draw();
+        }
+    }
+
+    public void updateCurrentObserver(ShapeList shapeList) {
+        shapeList.getShapeList().forEach(observer -> observer.clear());
+        shapeList.getShapeList().forEach(observer -> observer.draw());
+        for (IMovementObserver observer: shapeList.getSelectList().lastElement()) {
+            ShapeDecorator outline = new OutlineDecorator(observer);
+            outline.draw();
+        }
     }
 }

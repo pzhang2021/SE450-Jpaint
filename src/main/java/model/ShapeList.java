@@ -3,6 +3,9 @@ package model;
 import model.interfaces.IMovementObserver;
 import model.interfaces.IShape;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -16,6 +19,10 @@ public class ShapeList{
     private Stack<Stack<IMovementObserver>> undoRedoSelectList = new Stack<>();
     private Stack<TwoPoint> movementList = new Stack<>();
     private Stack<TwoPoint> undoRedoMovementList = new Stack<>();
+    private Stack<IMovementObserver> clipboard = new Stack<>();
+    private Stack<Integer> pasteList = new Stack<>();
+    private Stack<Stack<IMovementObserver>> undoRedoPasteItem = new Stack<>();
+    private Stack<Stack<IMovementObserver>> undoRedoDeleteList = new Stack<>();
 
     public void addShape(IShape iShape) {
         shapeList.add(iShape);
@@ -44,5 +51,21 @@ public class ShapeList{
 
     public Stack<TwoPoint> getUndoRedoMovementList() {
         return undoRedoMovementList;
+    }
+
+    public Stack<IMovementObserver> getClipboard() {
+        return clipboard;
+    }
+
+    public Stack<Integer> getPasteList() {
+        return pasteList;
+    }
+
+    public Stack<Stack<IMovementObserver>> getUndoRedoPasteItem() {
+        return undoRedoPasteItem;
+    }
+
+    public Stack<Stack<IMovementObserver>> getUndoRedoDeleteList() {
+        return undoRedoDeleteList;
     }
 }

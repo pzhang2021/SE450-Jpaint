@@ -1,4 +1,6 @@
 package model.interfaces;
+import java.awt.*;
+import model.Shape;
 
 /**
  * This is Abstract Factory Pattern
@@ -8,8 +10,6 @@ package model.interfaces;
 public interface IShape {
     void draw();
     void clear();
-    int getLeftCornerX();
-    int getLeftCornerY();
-    int getWidth();
-    int getHeight();
+    void repaint(Graphics g);
+    Shape getShape();
 }

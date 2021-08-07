@@ -1,7 +1,8 @@
 package controller;
 
-import model.Command.RedoCommand;
-import model.Command.UndoCommand;
+import model.Command.*;
+import model.Shape;
+import model.ShapeList;
 import model.interfaces.IApplicationState;
 import view.EventName;
 import view.interfaces.IEventCallback;
@@ -10,10 +11,12 @@ import view.interfaces.IUiModule;
 public class JPaintController implements IJPaintController {
     private final IUiModule uiModule;
     private final IApplicationState applicationState;
+    private final ShapeList shapeList;
 
-    public JPaintController(IUiModule uiModule, IApplicationState applicationState) {
+    public JPaintController(IUiModule uiModule, IApplicationState applicationState, ShapeList shapeList) {
         this.uiModule = uiModule;
         this.applicationState = applicationState;
+        this.shapeList = shapeList;
     }
 
     @Override
@@ -30,5 +33,9 @@ public class JPaintController implements IJPaintController {
 
         uiModule.addEvent(EventName.UNDO, () -> new UndoCommand().undo());
         uiModule.addEvent(EventName.REDO, () -> new RedoCommand().redo());
+        uiModule.addEvent(EventName.COPY, ()-> new CopyCommand(shapeList).run());
+        uiModule.addEvent(EventName.PASTE, ()-> new PasteCommand(shapeList).run());
+        uiModule.addEvent(EventName.DELETE, ()-> new DeleteCommand(shapeList).run());
+
     }
 }

@@ -11,35 +11,36 @@ import model.interfaces.IStrategy;
  */
 public class MoveCommand implements IStrategy, ICommand {
 
-    private TwoPoint twoPoint;
-    private ShapeList shapeList;
+  private TwoPoint twoPoint;
+  private ShapeList shapeList;
 
-    MovementAlert movementAlert;
-    public MoveCommand(TwoPoint twoPoint, ShapeList shapeList) {
-        this.twoPoint = twoPoint;
-        this.shapeList = shapeList;
-    }
+  MovementAlert movementAlert;
 
-    @Override
-    public void run() {
-        movementAlert = new MovementAlert();
-        movementAlert.addMovement(twoPoint, shapeList);
-        CommandHistory.add(this);
-    }
+  public MoveCommand(TwoPoint twoPoint, ShapeList shapeList) {
+    this.twoPoint = twoPoint;
+    this.shapeList = shapeList;
+  }
 
-    @Override
-    public void undo() {
-        if (shapeList.getMovementList().isEmpty()) {
-            return;
-        }
-        movementAlert.undoMove(shapeList);
-    }
+  @Override
+  public void run() {
+    movementAlert = new MovementAlert();
+    movementAlert.addMovement(twoPoint, shapeList);
+    CommandHistory.add(this);
+  }
 
-    @Override
-    public void redo() {
-        if (shapeList.getUndoRedoMovementList().isEmpty()) {
-            return;
-        }
-        movementAlert.redoMove(shapeList);
+  @Override
+  public void undo() {
+    if (shapeList.getMovementList().isEmpty()) {
+      return;
     }
+    movementAlert.undoMove(shapeList);
+  }
+
+  @Override
+  public void redo() {
+    if (shapeList.getUndoRedoMovementList().isEmpty()) {
+      return;
+    }
+    movementAlert.redoMove(shapeList);
+  }
 }

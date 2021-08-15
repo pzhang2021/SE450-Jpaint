@@ -4,10 +4,6 @@ import model.MovementAlert;
 import model.PasteShape;
 import model.ShapeList;
 import model.interfaces.ICommand;
-import model.interfaces.IMovementObserver;
-
-import java.util.HashMap;
-import java.util.Stack;
 
 public class PasteCommand implements ICommand {
 

@@ -3,13 +3,14 @@ package model.Command;
 import model.interfaces.ICommand;
 
 public class RedoCommand implements ICommand {
-    @Override
-    public void undo() {
 
-    }
+  @Override
+  public void undo() {
 
-    @Override
-    public void redo() {
-        CommandHistory.redo();
-    }
+  }
+
+  @Override
+  public void redo() {
+    CommandHistory.redo();
+  }
 }

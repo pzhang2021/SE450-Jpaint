@@ -19,22 +19,23 @@ import java.util.Collection;
 import java.util.EnumMap;
 
 /**
- *         We already have View (UI) initiated in main, so I create ShapeList as data model and MouseController as controller
- *         to satisfy with MVC pattern
- *         ShapeList and MouseController instances are created in main class
+ * We already have View (UI) initiated in main, so I create ShapeList as data model and
+ * MouseController as controller to satisfy with MVC pattern ShapeList and MouseController instances
+ * are created in main class
  */
 public class Main {
-    public static void main(String[] args){
-        ShapeList shapeList = new ShapeList();
-        PaintCanvasBase paintCanvas = new PaintCanvas(shapeList);
-        IGuiWindow guiWindow = new GuiWindow(paintCanvas);
-        IUiModule uiModule = new Gui(guiWindow);
-        ApplicationState appState = new ApplicationState(uiModule);
-        IJPaintController controller = new JPaintController(uiModule, appState, shapeList);
-        // initiate mouse Controller and ShapeList
-        MouseController mouseController = new MouseController(appState, paintCanvas, shapeList);
-        paintCanvas.addMouseListener(mouseController);
-        controller.setup();
 
-    }
+  public static void main(String[] args) {
+    ShapeList shapeList = new ShapeList();
+    PaintCanvasBase paintCanvas = new PaintCanvas(shapeList);
+    IGuiWindow guiWindow = new GuiWindow(paintCanvas);
+    IUiModule uiModule = new Gui(guiWindow);
+    ApplicationState appState = new ApplicationState(uiModule);
+    IJPaintController controller = new JPaintController(uiModule, appState, shapeList);
+    // initiate mouse Controller and ShapeList
+    MouseController mouseController = new MouseController(appState, paintCanvas, shapeList);
+    paintCanvas.addMouseListener(mouseController);
+    controller.setup();
+
+  }
 }

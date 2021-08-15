@@ -8,26 +8,27 @@ import java.awt.*;
 
 public class PaintCanvas extends PaintCanvasBase {
 
-    ShapeList shapeList;
-    public Graphics2D getGraphics2D() {
-        return (Graphics2D)getGraphics();
-    }
+  ShapeList shapeList;
 
-    public PaintCanvas(ShapeList shapeList) {
-        this.shapeList = shapeList;
-    }
+  public Graphics2D getGraphics2D() {
+    return (Graphics2D) getGraphics();
+  }
 
-    @Override
-    /**
-     * This is an event handler.  If this function gets called, its time to
-     * draw the entire picture.
-     * It you want to force a paint event, call aPaintCanvas.repaint()
-     */
-    public void paint(Graphics g) {
-        super.paint(g);
+  public PaintCanvas(ShapeList shapeList) {
+    this.shapeList = shapeList;
+  }
 
-        // System.out.println("Time to repaint");
-        shapeList.getShapeList().forEach(shape -> shape.repaint(g));
-        // shapeList.getSelectList().lastElement().forEach(shape -> shape.repaintOutline(g));
-    }
+  @Override
+  /**
+   * This is an event handler.  If this function gets called, its time to
+   * draw the entire picture.
+   * It you want to force a paint event, call aPaintCanvas.repaint()
+   */
+  public void paint(Graphics g) {
+    super.paint(g);
+
+    // System.out.println("Time to repaint");
+    shapeList.getShapeList().forEach(shape -> shape.repaint(g));
+    // shapeList.getSelectList().lastElement().forEach(shape -> shape.repaintOutline(g));
+  }
 }

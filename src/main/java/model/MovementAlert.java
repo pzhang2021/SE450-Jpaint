@@ -11,55 +11,66 @@ import java.util.Stack;
 public class MovementAlert {
 
   private Stack<IShape> observers;
+  private ShapeList shapeList;
 
-  public void addObserver(ShapeList shapeList, TwoPoint twoPoint) {
+  public MovementAlert(ShapeList shapeList) {
+    this.shapeList = shapeList;
+  }
+
+  public void addObserver(TwoPoint twoPoint) {
     CollisionDetection collisionDetection = new CollisionDetection(shapeList, twoPoint);
     collisionDetection.addSelectShape();
   }
 
-  public void addMovement(TwoPoint twoPoint, ShapeList shapeList) {
+  public void addMovement(TwoPoint twoPoint) {
     shapeList.getMovementList().add(twoPoint);
     observers = shapeList.getSelectList().lastElement();
-    notifyAllObservers(twoPoint, shapeList);
+    notifyAllObservers(twoPoint);
   }
 
-  public void undoMove(ShapeList shapeList) {
+  public void undoMove() {
     if (shapeList.getMovementList().isEmpty()) {
       return;
     }
     TwoPoint twoPoint = shapeList.getMovementList().lastElement().switchPoint();
     shapeList.getUndoRedoMovementList().add(shapeList.getMovementList().pop());
     observers = shapeList.getSelectList().lastElement();
-    notifyAllObservers(twoPoint, shapeList);
+    notifyAllObservers(twoPoint);
   }
 
-  public void redoMove(ShapeList shapeList) {
+  public void redoMove() {
     if (shapeList.getUndoRedoMovementList().isEmpty()) {
       return;
     }
     TwoPoint twoPoint = shapeList.getUndoRedoMovementList().lastElement();
     shapeList.getMovementList().add(shapeList.getUndoRedoMovementList().pop());
     observers = shapeList.getSelectList().lastElement();
-    notifyAllObservers(twoPoint, shapeList);
+    notifyAllObservers(twoPoint);
   }
 
-  private void notifyAllObservers(TwoPoint twoPoint, ShapeList shapeList) {
-    shapeList.getShapeList().forEach(observer -> observer.clear());
+  private void notifyAllObservers(TwoPoint twoPoint) {
     observers.forEach(observer -> observer.update(twoPoint));
-//        shapeList.getShapeList().forEach(shape -> shape.draw());
-    shapeList.getShapeList().forEach(observer -> observer.draw());
-    for (IShape observer : shapeList.getSelectList().lastElement()) {
-      OutlineDecorator outline = new OutlineDecorator();
-      outline.draw(observer);
-    }
+    updateCurrentObserver();
   }
 
-  public void updateCurrentObserver(ShapeList shapeList) {
-    shapeList.getShapeList().forEach(observer -> observer.clear());
-    shapeList.getShapeList().forEach(observer -> observer.draw());
-    for (IShape observer : shapeList.getSelectList().lastElement()) {
-      OutlineDecorator outline = new OutlineDecorator();
-      outline.draw(observer);
-    }
+  public void updateCurrentObserver() {
+    shapeList.redraw();
+    if (shapeList.getSelectList().isEmpty()) return;
+    OutlineDecorator outline = new OutlineDecorator();
+//    for (IShape observer : shapeList.getSelectList().lastElement()) {
+//      if (observer.getShape().isGroup()) {
+//        outline.draw(groupList(observer));
+//        return;
+//      }
+//      outline.draw(observer);
+//    }
+    outline.draw(shapeList.getSelectList().lastElement());
   }
+
+//  Stack<IShape> groupList(IShape shape) {
+//    for (Stack<IShape> list : shapeList.getGroupList()) {
+//      if (list.contains(shape)) return list;
+//    }
+//    return null;
+//  }
 }

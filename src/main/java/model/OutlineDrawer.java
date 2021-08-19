@@ -1,12 +1,28 @@
 package model;
 
+import java.util.Stack;
 import model.interfaces.IShape;
 
 import java.awt.*;
 
 public class OutlineDrawer {
 
-  public void draw(IShape s) {
+  public void draw(Stack<IShape> groupList) {
+    if (groupList.isEmpty()) return;
+    if (groupList.lastElement().getShape().isGroup() == true) {
+      drawGroupOutline(groupList);
+    } else {
+      drawEachOutline(groupList);
+    }
+  }
+
+  private void drawEachOutline(Stack<IShape> groupList) {
+    for (IShape observer : groupList) {
+      drawOutline(observer);
+    }
+  }
+
+  private void drawOutline(IShape s) {
     Graphics2D g = s.getShape().getPaintCanvas().getGraphics2D();
     Stroke stroke = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1,
         new float[]{9}, 0);
@@ -38,5 +54,46 @@ public class OutlineDrawer {
 
       g.drawPolygon(startArray, endArray, 3);
     }
+  }
+
+  private void drawGroupOutline(Stack<IShape> groupList) {
+    Graphics2D g = groupList.get(0).getShape().getPaintCanvas().getGraphics2D();
+    int groupWidth = getMaxXY(groupList).getX() - getMinXY(groupList).getX();
+    int groupHeight = getMaxXY(groupList).getY() - getMinXY(groupList).getY();
+
+    Stroke stroke = new BasicStroke(3, BasicStroke.CAP_BUTT, BasicStroke.JOIN_BEVEL, 1, new float[]{9}, 0);
+    g.setStroke(stroke);
+    g.setColor(Color.BLACK);
+    g.drawRect(getMinXY(groupList).getX() - 5, getMinXY(groupList).getY() - 5, groupWidth + 10,groupHeight + 10);
+  }
+
+  private Coordinate getMinXY(Stack<IShape> groupList) {
+    int startX = 9999;
+    int startY = 9999;
+    for(IShape shape: groupList){
+      if(shape.getShape().getTwoPoint().getMinXY().getX() < startX) {
+        startX = shape.getShape().getTwoPoint().getMinXY().getX();
+      }
+      if(shape.getShape().getTwoPoint().getMinXY().getY() < startY) {
+        startY = shape.getShape().getTwoPoint().getMinXY().getY();
+      }
+    }
+    Coordinate minXY = new Coordinate(startX, startY);
+    return minXY;
+  }
+
+  private Coordinate getMaxXY(Stack<IShape> groupList) {
+    int shapeEndX = 0;
+    int shapeEndY = 0;
+    for(IShape shape: groupList){
+      if(shape.getShape().getTwoPoint().getMaxXY().getX() > shapeEndX){
+        shapeEndX = shape.getShape().getTwoPoint().getMaxXY().getX();
+      }
+      if(shape.getShape().getTwoPoint().getMaxXY().getY() > shapeEndY){
+        shapeEndY = shape.getShape().getTwoPoint().getMaxXY().getY();
+      }
+    }
+    Coordinate maxXY = new Coordinate(shapeEndX,shapeEndY);
+    return maxXY;
   }
 }

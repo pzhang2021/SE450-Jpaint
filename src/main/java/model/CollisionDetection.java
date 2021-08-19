@@ -35,9 +35,19 @@ public class CollisionDetection {
       int Bw = shape.getShape().getTwoPoint().getWidth();
       int Bh = shape.getShape().getTwoPoint().getHeight();
       if (Bx + Bw > Ax && By + Bh > Ay && Ax + Aw > Bx && Ay + Ah > By) {
+        if (shape.getShape().isGroup()) {
+          groupChecker(shape);
+          return;
+        }
         lastList.add(shape);
       }
     }
     shapeList.getSelectList().add(lastList);
+  }
+
+  void groupChecker(IShape shape) {
+    for (Stack<IShape> groupList: shapeList.getGroupList()) {
+      if (groupList.contains(shape)) shapeList.getSelectList().add(groupList);
+    }
   }
 }

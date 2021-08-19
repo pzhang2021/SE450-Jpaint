@@ -20,10 +20,19 @@ public class ShapeList {
   private Stack<Integer> pasteList = new Stack<>();
   private Stack<Stack<IShape>> undoRedoPasteItem = new Stack<>();
   private Stack<Stack<IShape>> undoRedoDeleteList = new Stack<>();
+  private Stack<Stack<IShape>> groupList = new Stack<>();
+  private Stack<Stack<IShape>> undoRedoGroupList = new Stack<>();
 
   public void addShape(IShape iShape) {
     shapeList.add(iShape);
     iShape.draw();
+  }
+
+  public void redraw() {
+    shapeList.lastElement().clear();
+    for (IShape shape : shapeList) {
+      shape.draw();
+    }
   }
 
   public Stack<IShape> getShapeList() {
@@ -64,5 +73,13 @@ public class ShapeList {
 
   public Stack<Stack<IShape>> getUndoRedoDeleteList() {
     return undoRedoDeleteList;
+  }
+
+  public Stack<Stack<IShape>> getGroupList() {
+    return groupList;
+  }
+
+  public Stack<Stack<IShape>> getUndoRedoGroupList() {
+    return undoRedoGroupList;
   }
 }

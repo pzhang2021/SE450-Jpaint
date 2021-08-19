@@ -16,7 +16,7 @@ public class PasteShape {
     Stack<IShape> MyClipboard = shapeList.getClipboard();
     Stack<Integer> myPasteList = shapeList.getPasteList();
     int totalObservers = MyClipboard.size();
-    System.out.println(totalObservers);
+    // System.out.println(totalObservers);
     myPasteList.add(totalObservers);
     createNewShape();
   }
@@ -66,7 +66,7 @@ public class PasteShape {
       }
     myPasteList.add(myUndoRedoPasteItem.lastElement().size());
     for (IShape observer : myUndoRedoPasteItem.lastElement()) {
-      shapeList.getShapeList().add((IShape) observer);
+      shapeList.getShapeList().add(observer);
     }
   }
 }

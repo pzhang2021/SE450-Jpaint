@@ -1,34 +1,59 @@
-# SE450-Jpaint
-## Pengju Zhang
-## Sprint 1
-![alt text](./img/Sprint-1-UML.jpg "UML")
-Sprint 1 create 4 classes
-1. MouseController: It helps to detect position of mouse move and store
-   it to Coordinate Class for creating new shape.
-2. ShapeList: Shape list is the class mainly storing shape(s) information, it helps create 
-   shape on canvas and regulate undo/redo shape.
-3. Shape: Class for storing individual shape information (coordinates, color, shapetype, etc.),
-   and has method to draw rectangle shape.
-4. CreateShape: This class initiate by MouseRelease method, every time user drag and release their
-   mouse, it will pass the shape into shape list.
-   
-### Draw a filled-in Rectangle
-Done, user are able to create rectangle shape with different color.
-### Undo/Redo Draw
-Done
-### Have at least one design pattern implemented
-![alt text](./img/Sprint-1-UML-1.jpg "UML-Abstract Factory") <br>
-I created an interface containing 3 factory method pattern (run, undo, redo) so other class (CreateShape in this case)
-are able to implement and overwrite it with own properties.
+# SE450 - Jpaint Project
+###1. Builder Pattern
+![alt text](./img/BuilderPattern.png)
 
-## Sprint 2
-Except factory method pattern in sprint 1, there are totally 4 new patterns implemented
-1. Builder Pattern
-   1. Shape class implement builder pattern so other class are able to create shape through build pattern.
-2. Strategy Pattern
-   1. Strategy pattern use for mouse mode run() method, this includes IStrategy interface and Context for switching mode.
-3. Observer Pattern
-   1. MovementAlert class implement observer pattern, it allows SelectCommand to add observer(s) (selected shape(s)), and MoveCommand to 
-   update the new coordinate to all observer(s). This requires IMovementObserver interface to share similar methods.
-4. MVC Pattern
-   1. We already have View (UI) initiated in main, so I create ShapeList as data model and MouseController as controller to satisfy with MVC pattern
+MouseReleased method in MouseController class 
+create the ShapeBuilder class and then apply variables, 
+by using build method through ShapeBuilder, it create 
+individual Shape instance.
+
+###2. Factory Method Pattern
+
+![alt text](./img/FactoryMethod.png)
+
+I create an IShape interface and three concrete classes 
+that implements the IShape interface. Next, we define the 
+factory class ShapeFactory so CreateShape class could use 
+the ShapeFactory to get the Shape object. It will pass 
+information (Shape) to the ShapeFactory in order to get 
+the type of object it needs.
+
+###3. Strategy Pattern
+
+![alt text](./img/StrategyPattern.png)
+
+Normally we use if…else… statement to initiate every action 
+for create, select and move shape. Since their action are 
+same by using run() method, thus I separate them into each 
+package as CreateCommand, SelectCommand and MoveCommand, 
+and create IStragegy interface for only run() method, and 
+Context class is able to apply the method through IStrategy.
+
+###4. Observer Pattern
+
+![alt text](./img/ObserverPattern.png)
+
+In this case, IShape is observer interface implemented 
+by Rectangle, Ellipse and Triangle. And both SelectCommand 
+and MoveCommand act as client to add and update shape 
+information through MovementAlert class.
+
+###5. Decorator Pattern
+
+![alt text](./img/DecoratePattern.png)
+
+In OutlineDecorator class I create a method to outline the 
+list of IShape object(s), since all three shape implement 
+IShape, this allows behavior to be added to an individual 
+shape without affecting the behavior of other objects from 
+the same class.
+
+###6. MVC Pattern
+
+![alt text](./img/MVCPattern.png)
+
+ShapeList object has been created in Main as a shape data 
+storage, IGuiWindow and IUiModule are view classes that outputs 
+shape(s) details to the window console, MouseController is a controller 
+class that stores data into the ShapeList object and updates the view 
+through PaintCanvasBase accordingly.

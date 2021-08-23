@@ -1,5 +1,5 @@
 # SE450 - Jpaint Project
-###1. Builder Pattern
+### 1. Builder Pattern
 ![alt text](./img/BuilderPattern.png)
 
 MouseReleased method in MouseController class 
@@ -7,7 +7,7 @@ create the ShapeBuilder class and then apply variables,
 by using build method through ShapeBuilder, it create 
 individual Shape instance.
 
-###2. Factory Method Pattern
+### 2. Factory Method Pattern
 
 ![alt text](./img/FactoryMethod.png)
 
@@ -18,7 +18,7 @@ the ShapeFactory to get the Shape object. It will pass
 information (Shape) to the ShapeFactory in order to get 
 the type of object it needs.
 
-###3. Strategy Pattern
+### 3. Strategy Pattern
 
 ![alt text](./img/StrategyPattern.png)
 
@@ -29,7 +29,7 @@ package as CreateCommand, SelectCommand and MoveCommand,
 and create IStragegy interface for only run() method, and 
 Context class is able to apply the method through IStrategy.
 
-###4. Observer Pattern
+### 4. Observer Pattern
 
 ![alt text](./img/ObserverPattern.png)
 
@@ -38,7 +38,7 @@ by Rectangle, Ellipse and Triangle. And both SelectCommand
 and MoveCommand act as client to add and update shape 
 information through MovementAlert class.
 
-###5. Decorator Pattern
+### 5. Decorator Pattern
 
 ![alt text](./img/DecoratePattern.png)
 
@@ -48,7 +48,7 @@ IShape, this allows behavior to be added to an individual
 shape without affecting the behavior of other objects from 
 the same class.
 
-###6. MVC Pattern
+### 6. MVC Pattern
 
 ![alt text](./img/MVCPattern.png)
 
